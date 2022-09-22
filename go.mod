@@ -1,4 +1,4 @@
-module github.com/odedro987/gixel-engine
+module github.com/GixelEngine/gixel-engine
 
 go 1.18
 

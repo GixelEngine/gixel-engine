@@ -5,10 +5,10 @@ package debug
 import (
 	"image/color"
 
+	"github.com/GixelEngine/gixel-engine/gixel/math"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
-	"github.com/odedro987/gixel-engine/gixel/math"
 )
 
 type Collision struct {

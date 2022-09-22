@@ -1,11 +1,11 @@
 package states
 
 import (
+	"github.com/GixelEngine/gixel-engine/examples/testing/entities"
+	"github.com/GixelEngine/gixel-engine/gixel"
+	"github.com/GixelEngine/gixel-engine/gixel/systems/collision"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
-	"github.com/odedro987/gixel-engine/examples/testing/entities"
-	"github.com/odedro987/gixel-engine/gixel"
-	"github.com/odedro987/gixel-engine/gixel/systems/collision"
 )
 
 type PlayState struct {

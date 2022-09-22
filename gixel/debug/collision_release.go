@@ -3,8 +3,8 @@
 package debug
 
 import (
+	"github.com/GixelEngine/gixel-engine/gixel/math"
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/odedro987/gixel-engine/gixel/math"
 )
 
 type Collision struct{}

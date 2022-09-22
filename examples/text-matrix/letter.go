@@ -3,7 +3,7 @@ package main
 import (
 	"image/color"
 
-	"github.com/odedro987/gixel-engine/gixel"
+	"github.com/GixelEngine/gixel-engine/gixel"
 )
 
 type Letter struct {

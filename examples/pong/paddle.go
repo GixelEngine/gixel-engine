@@ -3,9 +3,9 @@ package main
 import (
 	"image/color"
 
-	"github.com/odedro987/gixel-engine/gixel"
-	"github.com/odedro987/gixel-engine/gixel/graphic"
-	"github.com/odedro987/gixel-engine/gixel/systems/physics"
+	"github.com/GixelEngine/gixel-engine/gixel"
+	"github.com/GixelEngine/gixel-engine/gixel/graphic"
+	"github.com/GixelEngine/gixel-engine/gixel/systems/physics"
 )
 
 type Paddle struct {

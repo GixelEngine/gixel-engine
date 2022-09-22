@@ -1,7 +1,7 @@
 package gixel
 
 import (
-	"github.com/odedro987/gixel-engine/gixel/math"
+	"github.com/GixelEngine/gixel-engine/gixel/math"
 )
 
 // TODO: Figure out a place to have this type

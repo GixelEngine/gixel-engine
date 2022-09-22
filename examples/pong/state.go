@@ -3,11 +3,11 @@ package main
 import (
 	"fmt"
 
+	"github.com/GixelEngine/gixel-engine/gixel"
+	"github.com/GixelEngine/gixel-engine/gixel/font"
+	"github.com/GixelEngine/gixel-engine/gixel/math"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
-	"github.com/odedro987/gixel-engine/gixel"
-	"github.com/odedro987/gixel-engine/gixel/font"
-	"github.com/odedro987/gixel-engine/gixel/math"
 )
 
 const DISTANCE_FROM_WALL = 64

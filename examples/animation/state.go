@@ -1,10 +1,10 @@
 package main
 
 import (
+	"github.com/GixelEngine/gixel-engine/gixel"
+	"github.com/GixelEngine/gixel-engine/gixel/systems/collision"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
-	"github.com/odedro987/gixel-engine/gixel"
-	"github.com/odedro987/gixel-engine/gixel/systems/collision"
 )
 
 type PlayState struct {

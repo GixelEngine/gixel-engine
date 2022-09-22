@@ -6,9 +6,9 @@ import (
 	"runtime"
 	"time"
 
+	"github.com/GixelEngine/gixel-engine/gixel/debug"
+	"github.com/GixelEngine/gixel-engine/gixel/graphic"
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/odedro987/gixel-engine/gixel/debug"
-	"github.com/odedro987/gixel-engine/gixel/graphic"
 )
 
 // use opengl instead of the much slower directx

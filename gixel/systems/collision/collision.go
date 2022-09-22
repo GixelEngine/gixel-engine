@@ -3,8 +3,8 @@ package collision
 import (
 	"math"
 
-	"github.com/odedro987/gixel-engine/gixel"
-	gm "github.com/odedro987/gixel-engine/gixel/math"
+	"github.com/GixelEngine/gixel-engine/gixel"
+	gm "github.com/GixelEngine/gixel-engine/gixel/math"
 )
 
 type imports interface {

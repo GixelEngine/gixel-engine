@@ -1,8 +1,8 @@
 package flipping
 
 import (
-	"github.com/odedro987/gixel-engine/gixel"
-	"github.com/odedro987/gixel-engine/gixel/math"
+	"github.com/GixelEngine/gixel-engine/gixel"
+	"github.com/GixelEngine/gixel-engine/gixel/math"
 )
 
 type imports interface {

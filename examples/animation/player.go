@@ -3,11 +3,11 @@ package main
 import (
 	"fmt"
 
-	"github.com/odedro987/gixel-engine/gixel"
-	"github.com/odedro987/gixel-engine/gixel/graphic"
-	"github.com/odedro987/gixel-engine/gixel/systems/animation"
-	"github.com/odedro987/gixel-engine/gixel/systems/flipping"
-	"github.com/odedro987/gixel-engine/gixel/systems/physics"
+	"github.com/GixelEngine/gixel-engine/gixel"
+	"github.com/GixelEngine/gixel-engine/gixel/graphic"
+	"github.com/GixelEngine/gixel-engine/gixel/systems/animation"
+	"github.com/GixelEngine/gixel-engine/gixel/systems/flipping"
+	"github.com/GixelEngine/gixel-engine/gixel/systems/physics"
 )
 
 type Player struct {

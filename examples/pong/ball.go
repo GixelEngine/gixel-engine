@@ -6,9 +6,9 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/odedro987/gixel-engine/gixel"
-	"github.com/odedro987/gixel-engine/gixel/graphic"
-	"github.com/odedro987/gixel-engine/gixel/systems/physics"
+	"github.com/GixelEngine/gixel-engine/gixel"
+	"github.com/GixelEngine/gixel-engine/gixel/graphic"
+	"github.com/GixelEngine/gixel-engine/gixel/systems/physics"
 )
 
 const BALL_SPEED = 800

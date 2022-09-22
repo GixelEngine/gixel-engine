@@ -4,11 +4,11 @@ import (
 	"image/color"
 	"math"
 
+	"github.com/GixelEngine/gixel-engine/gixel"
+	"github.com/GixelEngine/gixel-engine/gixel/font"
+	"github.com/GixelEngine/gixel-engine/gixel/graphic"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
-	"github.com/odedro987/gixel-engine/gixel"
-	"github.com/odedro987/gixel-engine/gixel/font"
-	"github.com/odedro987/gixel-engine/gixel/graphic"
 	"github.com/tanema/gween"
 	"github.com/tanema/gween/ease"
 )

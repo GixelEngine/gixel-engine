@@ -3,9 +3,9 @@ package gixel
 import (
 	"image/color"
 
+	"github.com/GixelEngine/gixel-engine/gixel/graphic"
+	"github.com/GixelEngine/gixel-engine/gixel/math"
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/odedro987/gixel-engine/gixel/graphic"
-	"github.com/odedro987/gixel-engine/gixel/math"
 )
 
 type BaseGxlSprite struct {

@@ -4,9 +4,9 @@ import (
 	"math/rand"
 	"time"
 
+	"github.com/GixelEngine/gixel-engine/gixel"
+	"github.com/GixelEngine/gixel-engine/gixel/font"
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/odedro987/gixel-engine/gixel"
-	"github.com/odedro987/gixel-engine/gixel/font"
 )
 
 type PlayState struct {

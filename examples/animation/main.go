@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/odedro987/gixel-engine/gixel"
+	"github.com/GixelEngine/gixel-engine/gixel"
 )
 
 func main() {

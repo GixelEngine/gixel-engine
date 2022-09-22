@@ -1,8 +1,8 @@
 package main
 
 import (
+	"github.com/GixelEngine/gixel-engine/gixel"
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/odedro987/gixel-engine/gixel"
 )
 
 type PlayState struct {
