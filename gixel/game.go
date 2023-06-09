@@ -1,6 +1,7 @@
 package gixel
 
 import (
+	"embed"
 	"log"
 	"os"
 	"runtime"
@@ -32,7 +33,7 @@ type GxlGame struct {
 	graphics    *graphic.GxlGraphicCache
 }
 
-func NewGame(width, height int, title string, initialState GxlState, zoom int) *GxlGame {
+func NewGame(width, height int, title string, fs *embed.FS, initialState GxlState, zoom int) *GxlGame {
 	g := GxlGame{
 		width:       width / zoom,
 		height:      height / zoom,
@@ -44,7 +45,7 @@ func NewGame(width, height int, title string, initialState GxlState, zoom int) *
 		graphics:    &graphic.GxlGraphicCache{},
 	}
 
-	g.graphics.Init()
+	g.graphics = graphic.NewGraphicCache(fs)
 
 	g.SwitchState(initialState)
 

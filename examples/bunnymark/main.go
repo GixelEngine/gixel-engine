@@ -1,6 +1,8 @@
 package main
 
 import (
+	"embed"
+
 	"github.com/GixelEngine/gixel-engine/gixel"
 )
 
@@ -11,6 +13,9 @@ import (
 const GAME_WIDTH = 800
 const GAME_HEIGHT = 600
 
+//go:embed assets
+var assets embed.FS
+
 func main() {
-	gixel.NewGame(GAME_WIDTH, GAME_HEIGHT, "Gixel Bunnymark", &PlayState{}, 1)
+	gixel.NewGame(GAME_WIDTH, GAME_HEIGHT, "Gixel Bunnymark", &assets, &PlayState{}, 1)
 }
