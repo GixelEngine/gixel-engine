@@ -53,20 +53,20 @@ func (o *BaseGxlObject) H() *int {
 	return &o.h
 }
 
-func (o *BaseGxlObject) GetPosition() (x, y float64) {
-	return o.x, o.y
+func (o *BaseGxlObject) GetPosition() *math.GxlPoint {
+	return math.NewPoint(o.x, o.y)
 }
 
 func (o *BaseGxlObject) SetPosition(x, y float64) {
 	o.x, o.y = x, y
 }
 
-func (o *BaseGxlObject) ScreenPosition() (x, y float64) {
-	return o.x - o.camera.scroll.X*o.scrollFactor.X, o.y - o.camera.scroll.Y*o.scrollFactor.Y
+func (o *BaseGxlObject) ScreenPosition() *math.GxlPoint {
+	return math.NewPoint(o.x-o.camera.scroll.X*o.scrollFactor.X, o.y-o.camera.scroll.Y*o.scrollFactor.Y)
 }
 
-func (o *BaseGxlObject) GetSize() (w, h int) {
-	return o.w, o.h
+func (o *BaseGxlObject) GetSize() *math.GxlPoint {
+	return math.NewPoint(float64(o.w), float64(o.h))
 }
 
 func (o *BaseGxlObject) SetSize(w, h int) {
@@ -124,10 +124,10 @@ type GxlObject interface {
 	Y() *float64
 	W() *int
 	H() *int
-	GetPosition() (x, y float64)
+	GetPosition() *math.GxlPoint
 	SetPosition(x, y float64)
-	ScreenPosition() (x, y float64)
-	GetSize() (w, h int)
+	ScreenPosition() *math.GxlPoint
+	GetSize() *math.GxlPoint
 	SetSize(w, h int)
 	Scale() *math.GxlPoint
 	ScaleMultiplier() *math.GxlPoint
