@@ -13,5 +13,5 @@ const GAME_HEIGHT = 960
 var assets embed.FS
 
 func main() {
-	gixel.NewGame(1280, 960, "Matrix", &assets, &PlayState{}, 1)
+	gixel.NewGame(1280, 960, "Matrix", &assets, &PlayState{}, 1).Run()
 }

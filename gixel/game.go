@@ -33,7 +33,7 @@ type GxlGame struct {
 	graphics    *graphic.GxlGraphicCache
 }
 
-func NewGame(width, height int, title string, fs *embed.FS, initialState GxlState, zoom int) {
+func NewGame(width, height int, title string, fs *embed.FS, initialState GxlState, zoom int) *GxlGame {
 	g := GxlGame{
 		width:       width / zoom,
 		height:      height / zoom,
@@ -57,11 +57,14 @@ func NewGame(width, height int, title string, fs *embed.FS, initialState GxlStat
 	// Use custom GxlLogger
 	g.logger = debug.NewLogger(time.Second * 5)
 
-	if err := ebiten.RunGame(&g); err != nil {
+	return &g
+}
+
+func (g *GxlGame) Run() {
+	if err := ebiten.RunGame(g); err != nil {
 		log.Fatal(err)
 	}
 	defer func() { g.state.Destroy() }()
-
 }
 
 func (g *GxlGame) Debug() *debug.Debug {

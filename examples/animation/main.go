@@ -10,5 +10,5 @@ import (
 var assets embed.FS
 
 func main() {
-	gixel.NewGame(640, 480, "Gixel Animation", &assets, &PlayState{}, 2)
+	gixel.NewGame(640, 480, "Gixel Animation", &assets, &PlayState{}, 2).Run()
 }
