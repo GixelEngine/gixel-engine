@@ -17,5 +17,5 @@ const GAME_HEIGHT = 600
 var assets embed.FS
 
 func main() {
-	gixel.NewGame(GAME_WIDTH, GAME_HEIGHT, "Gixel Bunnymark", &assets, &PlayState{}, 1)
+	gixel.NewGame(GAME_WIDTH, GAME_HEIGHT, "Gixel Bunnymark", &assets, &PlayState{}, 1).Run()
 }
