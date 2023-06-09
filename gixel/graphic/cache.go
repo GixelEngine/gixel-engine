@@ -1,6 +1,7 @@
 package graphic
 
 import (
+	"embed"
 	"fmt"
 	"image"
 	"image/color"
@@ -18,10 +19,14 @@ type cacheRecord struct {
 
 type GxlGraphicCache struct {
 	cache map[string]*cacheRecord
+	fs    *embed.FS
 }
 
-func (gc *GxlGraphicCache) Init() {
-	gc.cache = make(map[string]*cacheRecord)
+func NewGraphicCache(fs *embed.FS) *GxlGraphicCache {
+	return &GxlGraphicCache{
+		cache: make(map[string]*cacheRecord),
+		fs:    fs,
+	}
 }
 
 func (gc *GxlGraphicCache) Add(graphic *GxlGraphic, key string, persist bool) *GxlGraphic {
@@ -98,7 +103,7 @@ func (gc *GxlGraphicCache) LoadGraphic(path string, opt CacheOptions) *GxlGraphi
 		opt.Key += "_" + uuid.New().String()
 	}
 
-	img, _, err := ebitenutil.NewImageFromFile(path)
+	img, _, err := ebitenutil.NewImageFromFileSystem(gc.fs, path)
 	if err != nil {
 		log.Panicln(err)
 		// TODO: Error handling, default value?
@@ -154,7 +159,7 @@ func (gc *GxlGraphicCache) LoadAnimatedGraphic(path string, fw, fh int, opt Cach
 		opt.Key += "_" + uuid.New().String()
 	}
 
-	img, _, err := ebitenutil.NewImageFromFile(path)
+	img, _, err := ebitenutil.NewImageFromFileSystem(gc.fs, path)
 	if err != nil {
 		log.Panicln(err)
 		// TODO: Error handling, default value?
