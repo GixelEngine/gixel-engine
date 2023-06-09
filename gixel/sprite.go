@@ -66,20 +66,20 @@ func (s *BaseGxlSprite) Draw() {
 	}
 
 	s.drawOpts.GeoM.Reset()
-	sx, sy := s.ScreenPosition()
+	sxy := s.ScreenPosition()
 	w, h := s.graphic.Size()
 	s.drawOpts.GeoM.Translate(float64(-w/2), float64(-h/2))
 	s.drawOpts.GeoM.Rotate(s.angle * s.angleMultiplier)
 	s.drawOpts.GeoM.Scale(s.scale.X*s.scaleMultiplier.X, s.scale.Y*s.scaleMultiplier.Y)
 	s.drawOpts.GeoM.Translate(float64(w/2), float64(h/2))
-	s.drawOpts.GeoM.Translate(sx, sy)
+	s.drawOpts.GeoM.Translate(sxy.X, sxy.Y)
 	// // TODO: Add color for tinting/etc
 	s.drawOpts.ColorM.Reset()
 	s.drawOpts.ColorM.ScaleWithColor(s.color)
 
 	s.camera.Screen().DrawImage(s.graphic.GetFrame(s.frameIdx), s.drawOpts)
 	// TODO: This currently prevents draw call batching, consider drawing in a separate run
-	s.game.Debug().Collision.DrawBounds(s.camera.Screen(), *math.NewRectangle(sx+s.offset.X, sy+s.offset.Y, float64(s.w), float64(s.h)))
+	s.game.Debug().Collision.DrawBounds(s.camera.Screen(), *math.NewRectangle(sxy.X+s.offset.X, sxy.Y+s.offset.Y, float64(s.w), float64(s.h)))
 }
 
 type GxlSprite interface {
