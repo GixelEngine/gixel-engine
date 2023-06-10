@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/GixelEngine/gixel-engine/gixel"
-	"github.com/GixelEngine/gixel-engine/gixel/graphic"
+	"github.com/GixelEngine/gixel-engine/gixel/cache"
 	"github.com/GixelEngine/gixel-engine/gixel/systems/physics"
 )
 
@@ -35,7 +35,7 @@ func (b *Ball) Init(game *gixel.GxlGame) {
 	b.BaseGxlSprite.Init(game)
 	b.Physics.Init(b)
 
-	b.ApplyGraphic(game.Graphics().MakeGraphic(32, 32, color.White, graphic.CacheOptions{}))
+	b.ApplyGraphic(game.Graphics().MakeGraphic(32, 32, color.White, cache.CacheOptions{}))
 	*b.Visible() = false
 }
 

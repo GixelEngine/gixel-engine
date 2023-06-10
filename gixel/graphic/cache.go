@@ -7,66 +7,43 @@ import (
 	"image/color"
 	"log"
 
+	"github.com/GixelEngine/gixel-engine/gixel/cache"
 	"github.com/google/uuid"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
-type cacheRecord struct {
-	persist bool
-	graphic *GxlGraphic
-}
-
 type GxlGraphicCache struct {
-	cache map[string]*cacheRecord
-	fs    *embed.FS
+	cache *cache.GxlCache[GxlGraphic]
 }
 
 func NewGraphicCache(fs *embed.FS) *GxlGraphicCache {
-	return &GxlGraphicCache{
-		cache: make(map[string]*cacheRecord),
-		fs:    fs,
-	}
+	return &GxlGraphicCache{cache: cache.NewCache[GxlGraphic](fs)}
 }
 
-func (gc *GxlGraphicCache) Add(graphic *GxlGraphic, key string, persist bool) *GxlGraphic {
-	if graphic == nil || key == "" {
-		return nil
-	}
-
-	gc.cache[key] = &cacheRecord{persist: persist, graphic: graphic}
-
-	return graphic
+func (gc *GxlGraphicCache) Add(data *GxlGraphic, key string, persist bool) {
+	gc.cache.Add(data, key, persist)
 }
 
 func (gc *GxlGraphicCache) Get(key string) *GxlGraphic {
-	record, ok := gc.cache[key]
-	if !ok || record == nil {
-		return nil
-	}
-
-	return record.graphic
+	return gc.cache.Get(key)
 }
 
 func (gc *GxlGraphicCache) Clear() {
-	for _, record := range gc.cache {
-		if !record.persist {
-			record = nil
-		}
-	}
+	gc.cache.Clear()
 }
 
 // MakeGraphic creates a new ebiten.Image fills it with a given color.
 //
 // Returns a pointer of the GxlGraphic.
-func (gc *GxlGraphicCache) MakeGraphic(w, h int, c color.Color, opt CacheOptions) *GxlGraphic {
+func (gc *GxlGraphicCache) MakeGraphic(w, h int, c color.Color, opt cache.CacheOptions) *GxlGraphic {
 	if opt.Key == "" {
 		r, g, b, a := c.RGBA()
 		opt.Key = fmt.Sprintf("%d_%d_%02x%02x%02x%02x", w, h, r, g, b, a)
 	}
 
 	if !opt.Unique {
-		g := gc.Get(opt.Key)
+		g := gc.cache.Get(opt.Key)
 		if g != nil {
 			return g
 		}
@@ -77,7 +54,7 @@ func (gc *GxlGraphicCache) MakeGraphic(w, h int, c color.Color, opt CacheOptions
 	img := ebiten.NewImage(w, h)
 	img.Fill(c)
 
-	return gc.Add(
+	return gc.cache.Add(
 		&GxlGraphic{
 			frames: []*ebiten.Image{img},
 		},
@@ -89,13 +66,13 @@ func (gc *GxlGraphicCache) MakeGraphic(w, h int, c color.Color, opt CacheOptions
 // MakeGraphic creates a new ebiten.Image from a file path.
 //
 // Returns a pointer of the GxlGraphic.
-func (gc *GxlGraphicCache) LoadGraphic(path string, opt CacheOptions) *GxlGraphic {
+func (gc *GxlGraphicCache) LoadGraphic(path string, opt cache.CacheOptions) *GxlGraphic {
 	if opt.Key == "" {
 		opt.Key = path
 	}
 
 	if !opt.Unique {
-		g := gc.Get(opt.Key)
+		g := gc.cache.Get(opt.Key)
 		if g != nil {
 			return g
 		}
@@ -103,13 +80,13 @@ func (gc *GxlGraphicCache) LoadGraphic(path string, opt CacheOptions) *GxlGraphi
 		opt.Key += "_" + uuid.New().String()
 	}
 
-	img, _, err := ebitenutil.NewImageFromFileSystem(gc.fs, path)
+	img, _, err := ebitenutil.NewImageFromFileSystem(gc.cache.FS, path)
 	if err != nil {
 		log.Panicln(err)
 		// TODO: Error handling, default value?
 	}
 
-	return gc.Add(
+	return gc.cache.Add(
 		&GxlGraphic{
 			frames: []*ebiten.Image{img},
 		},
@@ -118,7 +95,7 @@ func (gc *GxlGraphicCache) LoadGraphic(path string, opt CacheOptions) *GxlGraphi
 	)
 }
 
-func (gc *GxlGraphicCache) LoadGraphicFromImage(img *ebiten.Image, opt CacheOptions) *GxlGraphic {
+func (gc *GxlGraphicCache) LoadGraphicFromImage(img *ebiten.Image, opt cache.CacheOptions) *GxlGraphic {
 	g := &GxlGraphic{
 		frames: []*ebiten.Image{img},
 	}
@@ -131,7 +108,7 @@ func (gc *GxlGraphicCache) LoadGraphicFromImage(img *ebiten.Image, opt CacheOpti
 	}
 
 	if !opt.Unique {
-		g := gc.Get(opt.Key)
+		g := gc.cache.Get(opt.Key)
 		if g != nil {
 			return g
 		}
@@ -139,19 +116,19 @@ func (gc *GxlGraphicCache) LoadGraphicFromImage(img *ebiten.Image, opt CacheOpti
 		opt.Key += "_" + uuid.New().String()
 	}
 
-	return gc.Add(g, opt.Key, opt.Persist)
+	return gc.cache.Add(g, opt.Key, opt.Persist)
 }
 
 // MakeGraphic creates a new ebiten.Image from a file path.
 //
 // Returns a pointer of the GxlGraphic.
-func (gc *GxlGraphicCache) LoadAnimatedGraphic(path string, fw, fh int, opt CacheOptions) *GxlGraphic {
+func (gc *GxlGraphicCache) LoadAnimatedGraphic(path string, fw, fh int, opt cache.CacheOptions) *GxlGraphic {
 	if opt.Key == "" {
 		opt.Key = path
 	}
 
 	if !opt.Unique {
-		g := gc.Get(opt.Key)
+		g := gc.cache.Get(opt.Key)
 		if g != nil {
 			return g
 		}
@@ -159,7 +136,7 @@ func (gc *GxlGraphicCache) LoadAnimatedGraphic(path string, fw, fh int, opt Cach
 		opt.Key += "_" + uuid.New().String()
 	}
 
-	img, _, err := ebitenutil.NewImageFromFileSystem(gc.fs, path)
+	img, _, err := ebitenutil.NewImageFromFileSystem(gc.cache.FS, path)
 	if err != nil {
 		log.Panicln(err)
 		// TODO: Error handling, default value?
@@ -178,18 +155,11 @@ func (gc *GxlGraphicCache) LoadAnimatedGraphic(path string, fw, fh int, opt Cach
 		}
 	}
 
-	return gc.Add(
+	return gc.cache.Add(
 		&GxlGraphic{
 			frames: frames,
 		},
 		opt.Key,
 		opt.Persist,
 	)
-}
-
-type CacheOptions struct {
-	Key     string
-	Unique  bool
-	Persist bool
-	NoCache bool
 }

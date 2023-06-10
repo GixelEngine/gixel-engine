@@ -5,8 +5,8 @@ import (
 	"math"
 
 	"github.com/GixelEngine/gixel-engine/gixel"
+	"github.com/GixelEngine/gixel-engine/gixel/cache"
 	"github.com/GixelEngine/gixel-engine/gixel/font"
-	"github.com/GixelEngine/gixel-engine/gixel/graphic"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/tanema/gween"
@@ -25,10 +25,10 @@ func (s *MenuState) Init(game *gixel.GxlGame) {
 	s.BaseGxlState.Init(game)
 
 	box1 := gixel.NewSprite(100, 100)
-	box1.ApplyGraphic(game.Graphics().MakeGraphic(100, 100, color.RGBA{R: 255, A: 255}, graphic.CacheOptions{}))
+	box1.ApplyGraphic(game.Graphics().MakeGraphic(100, 100, color.RGBA{R: 255, A: 255}, cache.CacheOptions{}))
 
 	box2 := gixel.NewSprite(200, 200)
-	box2.ApplyGraphic(game.Graphics().MakeGraphic(100, 100, color.RGBA{B: 255, A: 255}, graphic.CacheOptions{}))
+	box2.ApplyGraphic(game.Graphics().MakeGraphic(100, 100, color.RGBA{B: 255, A: 255}, cache.CacheOptions{}))
 
 	flixelFont := font.NewFont("assets/nokiafc22.ttf")
 	fontSmall := flixelFont.GetPreset(8)
