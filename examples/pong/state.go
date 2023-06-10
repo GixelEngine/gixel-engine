@@ -72,6 +72,7 @@ func (s *PlayState) Init(game *gixel.GxlGame) {
 		})
 	s.startTimer.Start()
 
+	s.Game().SoundManager().PlayMusic("assets/sounds/bg_music.ogg", 0.5, true)
 }
 
 func (s *PlayState) Update(elapsed float64) error {
@@ -123,6 +124,14 @@ func (s *PlayState) Update(elapsed float64) error {
 		fullscreen := ebiten.IsFullscreen()
 		fullscreen = !fullscreen
 		ebiten.SetFullscreen(fullscreen)
+	}
+
+	if inpututil.IsKeyJustPressed(ebiten.KeyM) {
+		if s.Game().SoundManager().IsMusicPaused() {
+			s.Game().SoundManager().ResumeMusic()
+		} else {
+			s.Game().SoundManager().PauseMusic()
+		}
 	}
 
 	return nil
