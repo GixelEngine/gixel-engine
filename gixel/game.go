@@ -113,6 +113,8 @@ func (g *GxlGame) Update() error {
 		return err
 	}
 
+	g.sound.Update()
+
 	return nil
 }
 
