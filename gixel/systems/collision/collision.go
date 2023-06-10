@@ -42,8 +42,7 @@ type collisionAttributes interface {
 
 func (c *Collision) UpdateLastPos(objs ...gixel.GxlObject) {
 	for _, obj := range objs {
-		x, y := obj.GetPosition()
-		c.lastPosMap[obj.GetID()] = gm.NewPoint(x, y)
+		c.lastPosMap[obj.GetID()] = obj.GetPosition()
 	}
 }
 
