@@ -27,11 +27,12 @@ func (gs *GxlSound) Play() {
 }
 
 type GxlSoundManager struct {
-	context       *audio.Context
-	musicPlayer   *audio.Player
-	isMusicPaused bool
-	isMusicLooped bool
-	cache         *GxlSoundCache
+	context        *audio.Context
+	musicPlayer    *audio.Player
+	isMusicPlaying bool
+	isMusicPaused  bool
+	isMusicLooped  bool
+	cache          *GxlSoundCache
 }
 
 func NewSoundManager(fs *embed.FS) *GxlSoundManager {
@@ -45,6 +46,7 @@ func (gsm *GxlSoundManager) PlayMusic(file string, volume float64, loop bool) {
 	sound := gsm.cache.LoadSound(file, cache.CacheOptions{})
 
 	gsm.musicPlayer = gsm.context.NewPlayerFromBytes(sound.data)
+	gsm.isMusicPlaying = true
 	gsm.isMusicPaused = false
 	gsm.isMusicLooped = loop
 	gsm.musicPlayer.SetVolume(volume)
@@ -56,11 +58,13 @@ func (gsm *GxlSoundManager) ResumeMusic() {
 		return
 	}
 
+	gsm.isMusicPlaying = true
 	gsm.isMusicPaused = false
 	gsm.musicPlayer.Play()
 }
 
 func (gsm *GxlSoundManager) PauseMusic() {
+	gsm.isMusicPlaying = false
 	gsm.isMusicPaused = true
 	gsm.musicPlayer.Pause()
 }
@@ -71,6 +75,10 @@ func (gsm *GxlSoundManager) SetMusicVolume(volume float64) {
 	}
 
 	gsm.musicPlayer.SetVolume(volume)
+}
+
+func (gsm *GxlSoundManager) IsMusicPlaying() bool {
+	return gsm.isMusicPlaying
 }
 
 func (gsm *GxlSoundManager) IsMusicPaused() bool {
@@ -91,6 +99,7 @@ func (gsm *GxlSoundManager) Update() {
 	}
 
 	if gsm.isMusicLooped && !gsm.musicPlayer.IsPlaying() && !gsm.isMusicPaused {
+		gsm.isMusicPlaying = true
 		gsm.isMusicPaused = false
 		gsm.musicPlayer.Rewind()
 		gsm.musicPlayer.Play()
