@@ -5,6 +5,7 @@ import (
 
 	"github.com/GixelEngine/gixel-engine/gixel/graphic"
 	"github.com/GixelEngine/gixel-engine/gixel/math"
+	"github.com/GixelEngine/gixel-engine/gixel/shader"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -14,7 +15,7 @@ type BaseGxlSprite struct {
 	frameIdx int
 	color    color.RGBA // TODO: Think of a better name
 	drawOpts *ebiten.DrawImageOptions
-	shader   graphic.GxlShader
+	shader   shader.GxlShader
 	geom     ebiten.GeoM
 }
 
@@ -36,7 +37,7 @@ func (s *BaseGxlSprite) ApplyGraphic(graphic *graphic.GxlGraphic) {
 	s.SetSize(graphic.Size())
 }
 
-func (s *BaseGxlSprite) ApplyShader(shader graphic.GxlShader) {
+func (s *BaseGxlSprite) ApplyShader(shader shader.GxlShader) {
 	s.shader = shader
 }
 
@@ -44,7 +45,7 @@ func (s *BaseGxlSprite) Graphic() *graphic.GxlGraphic {
 	return s.graphic
 }
 
-func (s *BaseGxlSprite) Shader() graphic.GxlShader {
+func (s *BaseGxlSprite) Shader() shader.GxlShader {
 	return s.shader
 }
 
@@ -101,7 +102,7 @@ func (s *BaseGxlSprite) Draw() {
 type GxlSprite interface {
 	GxlObject
 	ApplyGraphic(graphic *graphic.GxlGraphic)
-	ApplyShader(shader graphic.GxlShader)
+	ApplyShader(shader shader.GxlShader)
 	Graphic() *graphic.GxlGraphic
 	FrameIdx() *int
 	Color() *color.RGBA

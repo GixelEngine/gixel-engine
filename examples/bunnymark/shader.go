@@ -3,12 +3,12 @@ package main
 import (
 	_ "embed"
 
-	"github.com/GixelEngine/gixel-engine/gixel/graphic"
+	"github.com/GixelEngine/gixel-engine/gixel/shader"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
 type TestShader struct {
-	graphic.BaseGxlShader
+	shader.BaseGxlShader
 	sum float64
 }
 
@@ -17,7 +17,7 @@ var shaderProgram []byte
 
 func NewTestShader(img *ebiten.Image) *TestShader {
 	return &TestShader{
-		BaseGxlShader: *graphic.NewShader(shaderProgram, &ebiten.DrawRectShaderOptions{
+		BaseGxlShader: *shader.NewShader(shaderProgram, &ebiten.DrawRectShaderOptions{
 			Uniforms: map[string]interface{}{
 				"Idx": float32(0),
 			},

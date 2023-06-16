@@ -4,7 +4,7 @@ import (
 	"image/color"
 
 	"github.com/GixelEngine/gixel-engine/gixel"
-	"github.com/GixelEngine/gixel-engine/gixel/graphic"
+	"github.com/GixelEngine/gixel-engine/gixel/cache"
 	"github.com/GixelEngine/gixel-engine/gixel/systems/physics"
 )
 
@@ -25,7 +25,7 @@ func (w *Wall) Init(game *gixel.GxlGame) {
 	w.BaseGxlSprite.Init(game)
 	w.Physics.Init(w)
 
-	w.ApplyGraphic(game.Graphics().MakeGraphic(32, 32, color.White, graphic.CacheOptions{}))
+	w.ApplyGraphic(game.Graphics().MakeGraphic(32, 32, color.White, cache.CacheOptions{}))
 
 	w.Color().R = 0
 	w.Color().G = 0

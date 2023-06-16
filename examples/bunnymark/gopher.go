@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/GixelEngine/gixel-engine/gixel"
-	"github.com/GixelEngine/gixel-engine/gixel/graphic"
+	"github.com/GixelEngine/gixel-engine/gixel/cache"
 	"github.com/GixelEngine/gixel-engine/gixel/systems/physics"
 )
 
@@ -26,7 +26,7 @@ func (g *Gopher) Init(game *gixel.GxlGame) {
 	g.Velocity().X = RangeFloat(0, 300)
 	g.Velocity().Y = RangeFloat(1, 50)
 
-	g.ApplyGraphic(game.Graphics().LoadGraphic("assets/gopher.png", graphic.CacheOptions{}))
+	g.ApplyGraphic(game.Graphics().LoadGraphic("assets/gopher.png", cache.CacheOptions{}))
 	g.ApplyShader(NewTestShader(g.Graphic().GetFrame(0)))
 }
 
