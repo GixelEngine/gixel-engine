@@ -27,7 +27,8 @@ func (g *Gopher) Init(game *gixel.GxlGame) {
 	g.Velocity().Y = RangeFloat(1, 50)
 
 	g.ApplyGraphic(game.Graphics().LoadGraphic("assets/gopher.png", cache.CacheOptions{}))
-	g.ApplyShader(NewTestShader(g.Graphic().GetFrame(0)))
+
+	g.ApplyShader(NewColorSwapShader(3))
 }
 
 func (g *Gopher) Update(elapsed float64) error {

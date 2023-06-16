@@ -4,29 +4,35 @@ import (
 	_ "embed"
 
 	"github.com/GixelEngine/gixel-engine/gixel/shader"
-	"github.com/hajimehoshi/ebiten/v2"
 )
 
-type TestShader struct {
+type ColorSwapShader struct {
 	shader.BaseGxlShader
-	sum float64
+	interval float64
+	sum      float64
+	idx      int
 }
 
-//go:embed assets/shaders/shader.kage
+//go:embed assets/shaders/color_swap.kage
 var shaderProgram []byte
 
-func NewTestShader(img *ebiten.Image) *TestShader {
-	return &TestShader{
-		BaseGxlShader: *shader.NewShader(shaderProgram, &ebiten.DrawRectShaderOptions{
-			Uniforms: map[string]interface{}{
-				"Idx": float32(0),
-			},
-			Images: [4]*ebiten.Image{img, nil, nil, nil}}),
-		sum: 0,
+const ColorSwapKey = "color_swap"
+
+func NewColorSwapShader(interval float64) *ColorSwapShader {
+	return &ColorSwapShader{
+		BaseGxlShader: *shader.NewShader(ColorSwapKey),
+		interval:      interval,
+		sum:           0,
+		idx:           0,
 	}
 }
 
-func (s *TestShader) Update(elapsed float64) {
+func (s *ColorSwapShader) Update(elapsed float64) {
 	s.sum += elapsed
-	s.Opts().Uniforms["Idx"] = float32(int(s.sum) % 3)
+	if s.sum > s.interval {
+		s.idx++
+		s.idx %= 3
+		s.sum -= s.interval
+	}
+	s.Uniforms()["Idx"] = float32(s.idx)
 }
