@@ -13,8 +13,6 @@ type PlayState struct {
 func (s *PlayState) Init(game *gixel.GxlGame) {
 	s.BaseGxlState.Init(game)
 
-	s.Game().Shaders().Register(shaderProgram, ColorSwapKey)
-
 	s.gophers = gixel.NewGroup(0)
 	s.Add(s.gophers)
 }

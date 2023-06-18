@@ -38,7 +38,7 @@ func (s *BaseGxlSprite) ApplyGraphic(graphic *graphic.GxlGraphic) {
 }
 
 func (s *BaseGxlSprite) ApplyShader(shader shader.GxlShader) {
-	shader.Init(s.Game().Shaders().Get(shader.Key()))
+	shader.Init(s.Game().Shaders().LoadShader(shader.Path()))
 	s.shader = shader
 }
 
