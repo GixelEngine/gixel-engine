@@ -8,15 +8,15 @@ type BaseGxlShader struct {
 	uniforms map[string]interface{}
 }
 
-func NewShader(path string) *BaseGxlShader {
+func NewShader(path string, uniforms map[string]interface{}) *BaseGxlShader {
 	return &BaseGxlShader{
-		path: path,
+		path:     path,
+		uniforms: uniforms,
 	}
 }
 
 func (s *BaseGxlShader) Init(shader *ebiten.Shader) {
 	s.shader = shader
-	s.uniforms = make(map[string]interface{})
 }
 
 func (s *BaseGxlShader) Path() string {

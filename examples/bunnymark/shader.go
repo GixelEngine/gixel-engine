@@ -15,7 +15,7 @@ type ColorSwapShader struct {
 
 func NewColorSwapShader(interval float64) *ColorSwapShader {
 	return &ColorSwapShader{
-		BaseGxlShader: *shader.NewShader("assets/shaders/color_swap.kage"),
+		BaseGxlShader: *shader.NewShader("assets/shaders/color_swap.kage", map[string]interface{}{}),
 		interval:      interval,
 		sum:           0,
 		idx:           0,
