@@ -75,10 +75,10 @@ func (b *Ball) FlipHorizontal(normal float64, dir float64) {
 
 	if dir == 1 {
 		b.Velocity().Y = BALL_SPEED * -math.Sin((MAX_ANGLE*(math.Pi/180))*normal)
-		b.pingSfx.Play()
+		b.pingSfx.Play(false)
 	} else {
 		b.Velocity().Y = BALL_SPEED * math.Sin((MAX_ANGLE*(math.Pi/180))*normal) * dir
-		b.pongSfx.Play()
+		b.pongSfx.Play(false)
 	}
 }
 
