@@ -2,6 +2,7 @@ package sound
 
 import (
 	"embed"
+	"log"
 
 	"github.com/GixelEngine/gixel-engine/gixel/cache"
 	"github.com/hajimehoshi/ebiten/v2/audio"
@@ -17,13 +18,24 @@ type GxlSound struct {
 	player *audio.Player
 }
 
-func (gs *GxlSound) Play() {
+func (gs *GxlSound) Play(loop bool) {
 	if gs.player.IsPlaying() {
 		return
 	}
 
 	gs.player.Rewind()
 	gs.player.Play()
+}
+
+func (gs *GxlSound) SetVolume(volume float64) {
+	if volume < 0 || volume > 1 {
+		log.Panicln("volume must be between 0 and 1")
+	}
+	gs.player.SetVolume(volume)
+}
+
+func (gs *GxlSound) GetVolume() float64 {
+	return gs.player.Volume()
 }
 
 type GxlSoundManager struct {
