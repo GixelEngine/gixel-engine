@@ -1,0 +1,24 @@
+package main
+
+var Time float
+var IsWhite float 
+
+func Fragment(_ vec4, texCoords vec2, _ vec4) vec4 {
+    color := imageSrc0At(texCoords)
+
+    if color.rgb == vec3(1) && IsWhite == 1 {
+        color.r = sin(Time * 1.02) / 2 + 0.5
+        color.g = sin(Time * 1.23) / 2 + 0.5
+        color.b = sin(Time * 2.74) / 2 + 0.5
+        color.rgb += vec3(0.2)
+    }
+
+    if color.rgb == vec3(0) && IsWhite == 0 {
+        color.b = sin(Time * 1.71) / 2 + 0.5
+        color.r = sin(Time * 1.69) / 2 + 0.5
+        color.g = sin(Time * 2.24) / 2 + 0.5
+        color.rgb -= vec3(0.3)
+    }
+    
+    return color
+}

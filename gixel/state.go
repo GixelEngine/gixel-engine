@@ -55,6 +55,17 @@ func (s *BaseGxlState) OverlapsGroups(grp1, grp2 GxlGroup, callbacks ...Callback
 	return overlapped
 }
 
+func (s *BaseGxlState) Update(elapsed float64) error {
+	err := s.BaseGxlGroup.Update(elapsed)
+	if err != nil {
+		return err
+	}
+
+	s.cameras.Update(elapsed)
+
+	return nil
+}
+
 type GxlState interface {
 	GxlGroup
 	OverlapsObjectGroup(obj GxlObject, grp GxlGroup, callbacks ...CallbackFunc) bool
