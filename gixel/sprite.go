@@ -5,6 +5,7 @@ import (
 
 	"github.com/GixelEngine/gixel-engine/gixel/graphic"
 	"github.com/GixelEngine/gixel-engine/gixel/math"
+	"github.com/GixelEngine/gixel-engine/gixel/shader"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -14,6 +15,8 @@ type BaseGxlSprite struct {
 	frameIdx int
 	color    color.RGBA // TODO: Think of a better name
 	drawOpts *ebiten.DrawImageOptions
+	shader   shader.GxlShader
+	geom     ebiten.GeoM
 }
 
 func (s *BaseGxlSprite) Init(game *GxlGame) {
@@ -32,6 +35,15 @@ func NewSprite(x, y float64) GxlSprite {
 func (s *BaseGxlSprite) ApplyGraphic(graphic *graphic.GxlGraphic) {
 	s.graphic = graphic
 	s.SetSize(graphic.Size())
+}
+
+func (s *BaseGxlSprite) ApplyShader(shader shader.GxlShader) {
+	shader.Init(s.Game().Shaders().LoadShader(shader.Path()))
+	s.shader = shader
+}
+
+func (s *BaseGxlSprite) Shader() shader.GxlShader {
+	return s.shader
 }
 
 func (s *BaseGxlSprite) Graphic() *graphic.GxlGraphic {
@@ -65,19 +77,29 @@ func (s *BaseGxlSprite) Draw() {
 		return
 	}
 
-	s.drawOpts.GeoM.Reset()
+	s.geom.Reset()
 	sxy := s.ScreenPosition()
 	w, h := s.graphic.Size()
-	s.drawOpts.GeoM.Translate(float64(-w/2), float64(-h/2))
-	s.drawOpts.GeoM.Rotate(s.angle * s.angleMultiplier)
-	s.drawOpts.GeoM.Scale(s.scale.X*s.scaleMultiplier.X, s.scale.Y*s.scaleMultiplier.Y)
-	s.drawOpts.GeoM.Translate(float64(w/2), float64(h/2))
-	s.drawOpts.GeoM.Translate(sxy.X, sxy.Y)
-	// // TODO: Add color for tinting/etc
-	s.drawOpts.ColorM.Reset()
-	s.drawOpts.ColorM.ScaleWithColor(s.color)
+	s.geom.Translate(float64(-w/2), float64(-h/2))
+	s.geom.Rotate(s.angle * s.angleMultiplier)
+	s.geom.Scale(s.scale.X*s.scaleMultiplier.X, s.scale.Y*s.scaleMultiplier.Y)
+	s.geom.Translate(float64(w/2), float64(h/2))
+	s.geom.Translate(sxy.X, sxy.Y)
 
-	s.camera.Screen().DrawImage(s.graphic.GetFrame(s.frameIdx), s.drawOpts)
+	if s.shader != nil && s.shader.Shader() != nil {
+		s.camera.Screen().DrawRectShader(s.w, s.h, s.shader.Shader(), &ebiten.DrawRectShaderOptions{
+			Uniforms: s.shader.Uniforms(),
+			Images:   [4]*ebiten.Image{s.graphic.GetFrame(s.frameIdx), nil, nil, nil},
+			GeoM:     s.geom,
+		},
+		)
+	} else {
+		s.drawOpts.GeoM = s.geom
+		// // TODO: Add color for tinting/etc
+		s.drawOpts.ColorM.Reset()
+		s.drawOpts.ColorM.ScaleWithColor(s.color)
+		s.camera.Screen().DrawImage(s.graphic.GetFrame(s.frameIdx), s.drawOpts)
+	}
 	// TODO: This currently prevents draw call batching, consider drawing in a separate run
 	s.game.Debug().Collision.DrawBounds(s.camera.Screen(), *math.NewRectangle(sxy.X+s.offset.X, sxy.Y+s.offset.Y, float64(s.w), float64(s.h)))
 }
@@ -85,6 +107,8 @@ func (s *BaseGxlSprite) Draw() {
 type GxlSprite interface {
 	GxlObject
 	ApplyGraphic(graphic *graphic.GxlGraphic)
+	ApplyShader(shader shader.GxlShader)
+	Shader() shader.GxlShader
 	Graphic() *graphic.GxlGraphic
 	FrameIdx() *int
 	Color() *color.RGBA

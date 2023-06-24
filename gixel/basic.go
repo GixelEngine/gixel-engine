@@ -24,8 +24,8 @@ func (b *BaseGxlBasic) SwitchCamera(camera *GxlCamera) {
 	b.camera = camera
 }
 
-func (b *BaseGxlBasic) Camera() GxlCamera {
-	return *b.camera
+func (b *BaseGxlBasic) Camera() *GxlCamera {
+	return b.camera
 }
 
 func (b *BaseGxlBasic) Destroy() {
@@ -66,6 +66,6 @@ type GxlBasic interface {
 	Visible() *bool
 	Exists() *bool
 	Game() *GxlGame
-	Camera() GxlCamera
+	Camera() *GxlCamera
 	SwitchCamera(camera *GxlCamera)
 }

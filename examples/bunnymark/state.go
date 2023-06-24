@@ -15,7 +15,6 @@ func (s *PlayState) Init(game *gixel.GxlGame) {
 
 	s.gophers = gixel.NewGroup(0)
 	s.Add(s.gophers)
-
 }
 
 func (s *PlayState) Update(elapsed float64) error {

@@ -1,0 +1,15 @@
+package main
+
+var Idx float
+
+func Fragment(_ vec4, texCoord vec2, _ vec4) vec4 {
+	if Idx == 1.0 {
+		return imageSrc0At(texCoord).brga
+	}
+
+	if Idx == 2.0 {
+		return imageSrc0At(texCoord).gbra
+	}
+
+	return imageSrc0At(texCoord).rgba
+}

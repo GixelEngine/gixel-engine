@@ -6,6 +6,7 @@ import (
 	"github.com/GixelEngine/gixel-engine/gixel"
 	"github.com/GixelEngine/gixel-engine/gixel/font"
 	"github.com/GixelEngine/gixel-engine/gixel/math"
+	"github.com/GixelEngine/gixel-engine/gixel/shader"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
@@ -25,6 +26,12 @@ type PlayState struct {
 
 func (s *PlayState) Init(game *gixel.GxlGame) {
 	s.BaseGxlState.Init(game)
+
+	s.Camera().SetFilters([]shader.GxlShader{
+		NewLSDShader(true),
+		NewLSDShader(false),
+		NewCRTShader(),
+	})
 
 	s.paddles = gixel.NewGroup(0)
 	s.Add(s.paddles)
