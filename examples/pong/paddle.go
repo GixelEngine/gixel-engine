@@ -4,7 +4,7 @@ import (
 	"image/color"
 
 	"github.com/GixelEngine/gixel-engine/gixel"
-	"github.com/GixelEngine/gixel-engine/gixel/graphic"
+	"github.com/GixelEngine/gixel-engine/gixel/cache"
 	"github.com/GixelEngine/gixel-engine/gixel/systems/physics"
 )
 
@@ -27,7 +27,7 @@ func (p *Paddle) Init(game *gixel.GxlGame) {
 	p.Physics.Init(p)
 	p.Movement.Init(p)
 
-	p.ApplyGraphic(game.Graphics().MakeGraphic(48, GAME_HEIGHT/6, color.White, graphic.CacheOptions{}))
+	p.ApplyGraphic(game.Graphics().MakeGraphic(48, GAME_HEIGHT/6, color.White, cache.CacheOptions{}))
 }
 
 func (p *Paddle) Update(elapsed float64) error {

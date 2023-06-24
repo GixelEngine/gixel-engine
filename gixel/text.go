@@ -4,8 +4,8 @@ import (
 	"image/color"
 	"log"
 
+	"github.com/GixelEngine/gixel-engine/gixel/cache"
 	"github.com/GixelEngine/gixel-engine/gixel/font"
-	"github.com/GixelEngine/gixel-engine/gixel/graphic"
 	"github.com/GixelEngine/gixel-engine/gixel/math"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/text"
@@ -59,7 +59,7 @@ func (t *BaseGxlText) updateGraphic() {
 	p := rect.Size()
 	t.w, t.h = p.X, p.Y
 
-	t.graphic = t.Game().Graphics().LoadGraphicFromImage(ebiten.NewImage(t.w, t.h), graphic.CacheOptions{NoCache: true})
+	t.graphic = t.Game().Graphics().LoadGraphicFromImage(ebiten.NewImage(t.w, t.h), cache.CacheOptions{NoCache: true})
 	text.Draw(t.graphic.GetFrame(0), t.text, t.fontPreset.GetFace(), -rect.Min.X, -rect.Min.Y, color.White)
 
 	if t.screenPos == nil {

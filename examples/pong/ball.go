@@ -7,7 +7,8 @@ import (
 	"time"
 
 	"github.com/GixelEngine/gixel-engine/gixel"
-	"github.com/GixelEngine/gixel-engine/gixel/graphic"
+	"github.com/GixelEngine/gixel-engine/gixel/cache"
+	"github.com/GixelEngine/gixel-engine/gixel/sound"
 	"github.com/GixelEngine/gixel-engine/gixel/systems/physics"
 )
 
@@ -17,7 +18,9 @@ const MAX_ANGLE = 45
 type Ball struct {
 	gixel.BaseGxlSprite
 
-	active bool
+	active  bool
+	pingSfx *sound.GxlSound
+	pongSfx *sound.GxlSound
 
 	// Systems
 	physics.Physics
@@ -35,8 +38,12 @@ func (b *Ball) Init(game *gixel.GxlGame) {
 	b.BaseGxlSprite.Init(game)
 	b.Physics.Init(b)
 
-	b.ApplyGraphic(game.Graphics().MakeGraphic(32, 32, color.White, graphic.CacheOptions{}))
+	b.ApplyGraphic(game.Graphics().MakeGraphic(32, 32, color.White, cache.CacheOptions{}))
 	*b.Visible() = false
+
+	b.pingSfx = game.SoundManager().NewSound("assets/sounds/ping.ogg")
+	b.pongSfx = game.SoundManager().NewSound("assets/sounds/pong.ogg")
+
 }
 
 func (b *Ball) Spawn() {
@@ -68,8 +75,10 @@ func (b *Ball) FlipHorizontal(normal float64, dir float64) {
 
 	if dir == 1 {
 		b.Velocity().Y = BALL_SPEED * -math.Sin((MAX_ANGLE*(math.Pi/180))*normal)
+		b.pingSfx.Play(false)
 	} else {
 		b.Velocity().Y = BALL_SPEED * math.Sin((MAX_ANGLE*(math.Pi/180))*normal) * dir
+		b.pongSfx.Play(false)
 	}
 }
 

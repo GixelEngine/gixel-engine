@@ -5,7 +5,7 @@ import (
 
 	"github.com/GixelEngine/gixel-engine/examples/testing/systems"
 	"github.com/GixelEngine/gixel-engine/gixel"
-	"github.com/GixelEngine/gixel-engine/gixel/graphic"
+	"github.com/GixelEngine/gixel-engine/gixel/cache"
 	"github.com/GixelEngine/gixel-engine/gixel/systems/flipping"
 	"github.com/GixelEngine/gixel-engine/gixel/systems/physics"
 )
@@ -32,7 +32,7 @@ func (p *Player) Init(game *gixel.GxlGame) {
 	p.Physics.Init(p)
 	p.Movement.Init(p)
 
-	p.ApplyGraphic(game.Graphics().MakeGraphic(16, 16, color.White, graphic.CacheOptions{}))
+	p.ApplyGraphic(game.Graphics().MakeGraphic(16, 16, color.White, cache.CacheOptions{}))
 }
 
 func (p *Player) Update(elapsed float64) error {

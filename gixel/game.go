@@ -9,6 +9,7 @@ import (
 
 	"github.com/GixelEngine/gixel-engine/gixel/debug"
 	"github.com/GixelEngine/gixel-engine/gixel/graphic"
+	"github.com/GixelEngine/gixel-engine/gixel/sound"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -31,6 +32,7 @@ type GxlGame struct {
 	stateLoaded bool
 	debug       debug.Debug
 	graphics    *graphic.GxlGraphicCache
+	sound       *sound.GxlSoundManager
 }
 
 func NewGame(width, height int, title string, fs *embed.FS, initialState GxlState, zoom int) *GxlGame {
@@ -46,6 +48,7 @@ func NewGame(width, height int, title string, fs *embed.FS, initialState GxlStat
 	}
 
 	g.graphics = graphic.NewGraphicCache(fs)
+	g.sound = sound.NewSoundManager(fs)
 
 	g.SwitchState(initialState)
 
@@ -73,6 +76,10 @@ func (g *GxlGame) Debug() *debug.Debug {
 
 func (g *GxlGame) Graphics() *graphic.GxlGraphicCache {
 	return g.graphics
+}
+
+func (g *GxlGame) SoundManager() *sound.GxlSoundManager {
+	return g.sound
 }
 
 func (g *GxlGame) GenerateID() int {
@@ -105,6 +112,8 @@ func (g *GxlGame) Update() error {
 	if err != nil {
 		return err
 	}
+
+	g.sound.Update()
 
 	return nil
 }
